@@ -16,7 +16,11 @@ export default function ShareSection({ mbti, title }: ShareSectionProps) {
   }, []);
 
   function getShareUrl() {
-    return typeof window !== 'undefined' ? window.location.href : '';
+    if (typeof window === 'undefined') return '';
+    // from=test 파라미터 제거 — 받는 사람에겐 readonly 공유 결과로 표시
+    const url = new URL(window.location.href);
+    url.searchParams.delete('from');
+    return url.toString();
   }
 
   async function copyToClipboard(text: string) {

@@ -8,7 +8,9 @@ import Button from '@/components/common/Button';
 interface ResultViewProps {
   result: MbtiResult;
   scores: MbtiScores | null;
+  isOwn: boolean;
   onReset: () => void;
+  onStartTest: () => void;
 }
 
 const mbtiEmoji: Record<string, string> = {
@@ -18,17 +20,18 @@ const mbtiEmoji: Record<string, string> = {
   ISTP: '🔧', ISFP: '🎭', ESTP: '⚡', ESFP: '🎉',
 };
 
-export default function ResultView({ result, scores, onReset }: ResultViewProps) {
+export default function ResultView({ result, scores, isOwn, onReset, onStartTest }: ResultViewProps) {
   const emoji = mbtiEmoji[result.mbti] ?? '🧠';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-violet-50 to-indigo-100 px-6 py-10">
       <div className="w-full max-w-md mx-auto space-y-6">
+
         {/* 헤더 */}
         <div className="bg-gradient-to-br from-violet-600 to-indigo-600 rounded-3xl p-8 text-center text-white shadow-lg">
           <div className="text-6xl mb-4">{emoji}</div>
           <div className="text-sm font-semibold uppercase tracking-widest opacity-80 mb-1">
-            당신의 유형은
+            {isOwn ? '당신의 유형은' : '공유된 유형'}
           </div>
           <h1 className="text-5xl font-extrabold mb-2 tracking-wide">{result.mbti}</h1>
           <p className="text-lg font-medium opacity-90">{result.title}</p>
@@ -74,21 +77,25 @@ export default function ResultView({ result, scores, onReset }: ResultViewProps)
           </div>
         </div>
 
-        {/* 점수 차트 — 공유 링크로 접근 시 숨김 */}
+        {/* 점수 차트 */}
         {scores && <ScoreChart scores={scores} />}
-        {!scores && (
-          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 text-center text-gray-400 text-sm">
-            직접 테스트하면 나만의 지표 분석 결과를 볼 수 있어요 🧩
+
+        {/* 내 결과: 공유 + 다시하기 / 공유된 결과: 테스트 유도 CTA */}
+        {isOwn ? (
+          <>
+            <ShareSection mbti={result.mbti} title={result.title} />
+            <Button variant="secondary" onClick={onReset}>
+              🔄 다시 테스트하기
+            </Button>
+          </>
+        ) : (
+          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 text-center space-y-4">
+            <p className="text-gray-500 text-sm">나는 어떤 유형일까? 🤔</p>
+            <Button onClick={onStartTest}>
+              나도 테스트해보기 →
+            </Button>
           </div>
         )}
-
-        {/* 공유 */}
-        <ShareSection mbti={result.mbti} title={result.title} />
-
-        {/* 다시 하기 */}
-        <Button variant="secondary" onClick={onReset}>
-          🔄 다시 테스트하기
-        </Button>
 
         <div className="h-6" />
       </div>

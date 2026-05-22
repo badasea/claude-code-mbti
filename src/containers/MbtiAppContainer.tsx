@@ -19,8 +19,10 @@ export default function MbtiAppContainer() {
         sn: String(scores.SN.percentage),
         tf: String(scores.TF.percentage),
         jp: String(scores.JP.percentage),
+        from: 'test',
       });
-      router.push(`/result/${mbti}?${params.toString()}`);
+      // replace로 로딩 상태를 히스토리에서 교체 — 뒤로가기 시 인트로로 이동
+      router.replace(`/result/${mbti}?${params.toString()}`);
     },
     [router],
   );

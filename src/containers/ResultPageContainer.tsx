@@ -15,10 +15,7 @@ function parseScores(
   jp: string | null,
 ): MbtiScores | null {
   if (!ei || !sn || !tf || !jp) return null;
-  const toScore = (pct: number) => ({
-    score: pct >= 50 ? 1 : -1,
-    percentage: pct,
-  });
+  const toScore = (pct: number) => ({ score: pct >= 50 ? 1 : -1, percentage: pct });
   return {
     EI: toScore(Number(ei)),
     SN: toScore(Number(sn)),
@@ -31,6 +28,7 @@ export default function ResultPageContainer({ result }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const isOwn = searchParams.get('from') === 'test';
   const scores = parseScores(
     searchParams.get('ei'),
     searchParams.get('sn'),
@@ -42,7 +40,9 @@ export default function ResultPageContainer({ result }: Props) {
     <ResultView
       result={result}
       scores={scores}
-      onReset={() => router.push('/')}
+      isOwn={isOwn}
+      onReset={() => router.replace('/')}
+      onStartTest={() => router.push('/')}
     />
   );
 }
