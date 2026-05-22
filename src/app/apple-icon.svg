@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed"/>
+      <stop offset="100%" style="stop-color:#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <rect width="180" height="180" rx="40" fill="url(#bg)"/>
+  <!-- Brain shape scaled to 180x180 -->
+  <!-- Left hemisphere -->
+  <path d="M45 101 C45 73 57 56 73 56 C73 47 79 42 87 42 L87 138 C79 138 73 132 73 124 C57 124 45 113 45 101 Z" fill="white" opacity="0.95"/>
+  <path d="M54 85 C60 79 66 79 73 85" stroke="#7c3aed" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M52 101 C58 95 67 95 70 103" stroke="#7c3aed" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M55 118 C61 112 68 114 72 120" stroke="#7c3aed" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <!-- Right hemisphere -->
+  <path d="M135 101 C135 73 123 56 107 56 C107 47 101 42 93 42 L93 138 C101 138 107 132 107 124 C123 124 135 113 135 101 Z" fill="white" opacity="0.95"/>
+  <path d="M126 85 C120 79 114 79 107 85" stroke="#7c3aed" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M128 101 C122 95 113 95 110 103" stroke="#7c3aed" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M125 118 C119 112 112 114 108 120" stroke="#7c3aed" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <!-- Center line -->
+  <line x1="90" y1="43" x2="90" y2="138" stroke="#c4b5fd" stroke-width="3.5"/>
+  <!-- Stem -->
+  <rect x="79" y="136" width="22" height="11" rx="5" fill="white" opacity="0.8"/>
+</svg>
