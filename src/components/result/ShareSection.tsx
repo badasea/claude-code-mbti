@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Button from '@/components/common/Button';
 
 interface ShareSectionProps {
   mbti: string;
@@ -11,38 +10,41 @@ interface ShareSectionProps {
 export default function ShareSection({ mbti, title }: ShareSectionProps) {
   const [copied, setCopied] = useState(false);
 
+  function getShareUrl() {
+    if (typeof window === 'undefined') return '';
+    // 점수 쿼리스트링 제거 — MBTI 유형 URL만 공유
+    return `${window.location.origin}/result/${mbti}`;
+  }
+
   async function handleCopyLink() {
-    const url = typeof window !== 'undefined' ? window.location.href : '';
+    const url = getShareUrl();
     try {
       await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     } catch {
-      // fallback: select + execCommand
       const el = document.createElement('textarea');
       el.value = url;
       document.body.appendChild(el);
       el.select();
       document.execCommand('copy');
       document.body.removeChild(el);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   }
 
   function handleKakaoShare() {
-    const text = `나의 MBTI 결과는 ${mbti} - ${title}! 너는?`;
-    const url = typeof window !== 'undefined' ? window.location.href : '';
-    // KakaoTalk SDK가 없으면 공유 텍스트 복사로 대체
+    const url = getShareUrl();
+    const text = `나의 MBTI 결과는 ${mbti} - ${title}! 너는?\n${url}`;
+
     if (typeof window !== 'undefined' && 'Kakao' in window) {
       // @ts-expect-error Kakao SDK 전역
       window.Kakao.Share.sendDefault({
         objectType: 'text',
-        text,
+        text: `나의 MBTI 결과는 ${mbti} - ${title}! 너는?`,
         link: { mobileWebUrl: url, webUrl: url },
       });
     } else {
-      navigator.clipboard.writeText(`${text}\n${url}`).catch(() => null);
+      navigator.clipboard.writeText(text).catch(() => null);
       alert('카카오톡 공유 텍스트가 복사되었습니다.');
     }
   }

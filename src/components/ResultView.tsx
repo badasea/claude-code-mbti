@@ -7,7 +7,7 @@ import Button from '@/components/common/Button';
 
 interface ResultViewProps {
   result: MbtiResult;
-  scores: MbtiScores;
+  scores: MbtiScores | null;
   onReset: () => void;
 }
 
@@ -74,8 +74,13 @@ export default function ResultView({ result, scores, onReset }: ResultViewProps)
           </div>
         </div>
 
-        {/* 점수 차트 */}
-        <ScoreChart scores={scores} />
+        {/* 점수 차트 — 공유 링크로 접근 시 숨김 */}
+        {scores && <ScoreChart scores={scores} />}
+        {!scores && (
+          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 text-center text-gray-400 text-sm">
+            직접 테스트하면 나만의 지표 분석 결과를 볼 수 있어요 🧩
+          </div>
+        )}
 
         {/* 공유 */}
         <ShareSection mbti={result.mbti} title={result.title} />

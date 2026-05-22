@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { MbtiQuestion, MbtiLetter } from '@/types';
 import ProgressBar from '@/components/common/ProgressBar';
-import Button from '@/components/common/Button';
 
 interface TestViewProps {
   question: MbtiQuestion;
@@ -71,7 +70,16 @@ export default function TestView({
                       : 'border-gray-200 bg-white text-gray-700 hover:border-violet-400 hover:bg-violet-50 hover:text-violet-700 active:scale-95'
                   }`}
               >
-                <span className="mr-3 text-violet-400 font-bold">
+                <span
+                  className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold mr-3 shrink-0
+                    ${
+                      selected === idx
+                        ? 'bg-violet-500 text-white'
+                        : selected !== null
+                        ? 'bg-gray-200 text-gray-400'
+                        : 'bg-gray-100 text-gray-500'
+                    }`}
+                >
                   {idx === 0 ? 'A' : 'B'}
                 </span>
                 {option.text}
